@@ -24,8 +24,15 @@ require 'faker'
   dog = Dog.create!(first_name: Faker::Name.first_name, city_id: City.all.sample.id)
 end
 
-# Création de 100 Stroll (avec random Dogsitter & random Dog)
-require 'faker'
-100.times do
-  stroll = Stroll.create!(dogsitter_id: Dogsitter.all.sample.id, dog_id: Dog.all.sample.id, city_id: City.all.sample.id, date: Faker::Date.in_date_period)
+# # Création de 100 Stroll (avec random Dogsitter & random Dog)
+# require 'faker'
+# 100.times do
+#   stroll = Stroll.create!(dogsitter_id: Dogsitter.all.sample.id, dog_id: Dog.all.sample.id, city_id: City.all.sample.id, date: Faker::Date.in_date_period)
+# end
+
+Dogsitter.all.each do |dogsitter|
+  dogs = Dog.all.sample(rand(1..5))
+  dogs.each do |dog|
+    Stroll.create!(dogsitter_id: dogsitter.id, dog_id: dog.id, city_id: City.all.sample.id, date: Faker::Date.in_date_period)
+  end
 end
